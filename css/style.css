@@ -20,7 +20,10 @@ main {
 }
 
 .checked{
-    color: orange;
+    color: #FFD700 !important;
+}
+.fa:not(.checked){
+    color: #3b3b3b;
 }
 
 .offcanvas-top{
@@ -38,4 +41,8 @@ main {
 }
 .dropdown-menu{
     padding: 10px;
+}
+.fa{
+    direction: rtl;
+    display: inline-block;
 }

@@ -30,19 +30,31 @@ button.addEventListener('click', (e) => {
     const encontradas = peliculas.filter(p => p.title.toLowerCase().includes(valorInput) ||
     p.genres.map(g => g.name).join(', ').toLowerCase().includes(valorInput) || p.tagline.toLowerCase().includes(valorInput) || 
     p.overview.toLowerCase().includes(valorInput));
+    
 
     if (encontradas.length > 0) {
         encontradas.forEach(pelicula => {
+        let estrellas = '';
+        const puntaje = pelicula.vote_average / 2;
+        for (let i=1 ; i<= 5; i++){
+            if(puntaje >= i){
+                estrellas += '<span class="fa fa-star checked"></span>';
+            } else if(puntaje >= i - 0.5){
+                estrellas += '<span class="fa fa-star-half-o checked"></span>';
+            }else{
+                estrellas += '<span class="fa fa-star"></span>';
+            }
+        }
             const li = document.createElement('li');
             li.className = "list-group-item"; 
-            li.innerHTML = `<b>${pelicula.title}</b> <br> ${pelicula.tagline} <span class="fa fa-star checked">${pelicula.vote_average}</span>`;
+            li.innerHTML = `<b>${pelicula.title}</b> <br> ${pelicula.tagline} ${estrellas}`;
             li.addEventListener('click', () => {
             document.getElementById('modalPeliculaLabel').textContent = pelicula.title;
             document.getElementById('modalPeliculaBody').innerHTML = `
                 <p><b>Tagline:</b> ${pelicula.tagline}</p>
                 <p><b>Géneros:</b> ${pelicula.genres.map(g => g.name).join(', ')}</p>
                 <p><b>Descripción:</b> ${pelicula.overview}</p>
-                <p><b>Puntuación:</b> <span class="fa fa-star checked"></span> ${pelicula.vote_average}</p>
+                <p><b>Puntuación:</b>${estrellas}</p>
             `;
             const dropdown = document.querySelector('.dropdown-menu');
             dropdown.innerHTML = "";
